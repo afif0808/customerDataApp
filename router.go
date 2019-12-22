@@ -8,6 +8,8 @@ import (
 
 func InitRouter() *mux.Router {
 	router := mux.NewRouter()
-	router.Handle("/", controllers.ServeViewController("../src/customerManagementApp/views/home.html", ""))
+	router.Handle("/", controllers.ServeViewController(
+		"../src/customerManagementApp/views/home.html",
+		"../src/customerManagementApp/views/template.html"))
 	return router
 }
