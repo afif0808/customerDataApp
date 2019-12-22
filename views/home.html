@@ -1,1 +1,23 @@
-<h1>Welcome Home</h1>
+{{define "title"}}<title>Home</title>{{end}}
+{{define "content"}}
+
+  <div class="" ng-app="App" ng-controller="Controller">
+    <h1 >Welcome ((name))</h1>
+  </div>
+  
+  <script type="text/javascript">
+    const app = angular.module("App",[])
+
+    app.controller("Controller",function($scope){
+      $scope.name = "afif"
+    })
+
+    app.config(function($interpolateProvider) {
+      $interpolateProvider.startSymbol('((');
+      $interpolateProvider.endSymbol('))');
+    });
+  </script>
+
+
+
+{{end}}

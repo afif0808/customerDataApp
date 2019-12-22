@@ -1,2 +1,29 @@
-<h1>This is Template</h1>
-{{template "home.html" .}}
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+  <head>
+    <script src="assets/angular/angular.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/assets/css/template.css">
+    <meta charset="utf-8">
+    {{template "title"}}
+  </head>
+  <body>
+    <div class="leftside primaryColorBackground">
+      <nav class="menu">
+        <ul>
+          <li class=" item  fontSize18px textColor boldFont robotoFont">
+            <img  src="assets/icons/customer_icon24_white.svg" alt="">
+            <a href="#">Pelanggan</a>
+          </li>
+
+          <li class=" item  fontSize18px textColor boldFont robotoFont">
+            <img  src="assets/icons/setting_icon24_white.svg" alt="">
+            <a href="#">Pengaturan</a>
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+    <!-- <h1>This is template</h1>
+      {{template "content" .}} -->
+  </body>
+</html>
