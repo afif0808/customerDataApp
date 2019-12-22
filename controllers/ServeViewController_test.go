@@ -10,11 +10,22 @@ import (
 )
 
 func TestServeViewController(t *testing.T) {
+
 	successExpectation := http.StatusOK
-	testRequest := httptest.NewRequest("GET", "http://localhost:8080/test", nil)
 	testRecorder := httptest.NewRecorder()
 	testRouter := mux.NewRouter()
-	testRouter.Handle("/test", ServeViewController("/home.html", ""))
-	testRouter.ServeHTTP(testRecorder, testRequest)
+
+	testRouter.Handle("/testWithoutTemplate", ServeViewController("../views/home.html", ""))
+	testRouter.Handle("/testWithTemplate", ServeViewController("../views/home.html", "../views/template.html"))
+
+	//serve view without template
+	testRequestWithoutTemplate := httptest.NewRequest("GET", "http://localhost:123/testWithoutTemplate", nil)
+	testRouter.ServeHTTP(testRecorder, testRequestWithoutTemplate)
 	assert.Equal(t, successExpectation, testRecorder.Code)
+
+	//serve view with template
+	testRequestWithTemplate := httptest.NewRequest("GET", "http://localhost:123/testWithTemplate", nil)
+	testRouter.ServeHTTP(testRecorder, testRequestWithTemplate)
+	assert.Equal(t, successExpectation, testRecorder.Code)
+
 }

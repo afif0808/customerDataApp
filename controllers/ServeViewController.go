@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"html/template"
+	"log"
 	"net/http"
 )
 
@@ -28,6 +29,7 @@ func ServeViewController(file, templateFile string) http.Handler {
 			view, parseFilesErr = template.ParseFiles(file)
 			if parseFilesErr != nil {
 				w.WriteHeader(http.StatusInternalServerError)
+				log.Println(parseFilesErr)
 				return
 			}
 		}
