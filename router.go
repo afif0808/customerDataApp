@@ -8,8 +8,8 @@ import (
 
 func InitRouter() *mux.Router {
 	router := mux.NewRouter()
-	router.Handle("/", controllers.ServeViewController(
-		"../src/customerManagementApp/views/home.html",
+	router.Handle("/pelanggan", controllers.ServeViewController(
+		"../src/customerManagementApp/views/pelanggan.html",
 		"../src/customerManagementApp/views/template.html"))
 
 	// assets serve static files such as css,javascript,image dll.

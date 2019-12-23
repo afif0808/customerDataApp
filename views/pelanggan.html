@@ -1,0 +1,29 @@
+{{define "title"}}<title>Pelanggan</title>{{end}}
+{{define "content"}}
+
+  <div class="content" ng-app="App" ng-controller="Controller">
+    <div class="box primaryColorBackground">
+      <img style="float:left;"  src="assets/icons/customer_icon50_white.svg" alt="">
+      <h1 style="float:left;" class="textColor">Pelanggan</h1>
+    </div>
+
+    <input class="searchBox" type="text" placeholder="Cari..." name="" value="">
+    <img style="float:left;margin-left:-50px;"  src="assets/icons/search_icon20_white.svg" alt="">
+  </div>
+
+  <script type="text/javascript">
+    const app = angular.module("App",[])
+
+    app.controller("Controller",function($scope){
+      $scope.name = "afif"
+    })
+
+    app.config(function($interpolateProvider) {
+      $interpolateProvider.startSymbol('((');
+      $interpolateProvider.endSymbol('))');
+    });
+  </script>
+
+
+
+{{end}}
