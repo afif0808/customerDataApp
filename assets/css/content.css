@@ -12,17 +12,42 @@
 }
 .searchBox {
   width: 500px;
-  background: #455A64;
+  background: #fff;
   float: left;
   padding: 12px 12px 12px 20px;
-  color: #fff;
+  color: #000;
   font-weight: bold;
   border: none;
   outline: none;
   font-size: 20px;
   border-radius: 100px;
+  border: solid 1px #ccc;
 }
 
 ::placeholder {
+  color: #000;
+}
+
+.tbl-vertical-v1 td {
+  padding: 10px 20px 10px 20px ;
+  margin: 5px;
+}
+
+.tbl-vertical-v1 tr:first-child td {
+  font-weight: bolder;
+  border-bottom: solid 1px #ccc;
+}
+.tbl-wrapper {
+  float: left;
+  width: 100%;
+}
+
+.tbl-vertical-v1 {
+  margin-top: 30px;
+  font-size: 20px;
   color: #fff;
+  font-family: roboto;
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 1px #ccc;
 }

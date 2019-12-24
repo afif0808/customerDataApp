@@ -2,24 +2,25 @@
   width: 200px;
   height: 2000px;
   position: fixed;
-  /* box-shadow: 3px 3px 15px #ccc; */
+  box-shadow: 2px 2px 8px #ccc;
 }
 * {
   margin: 0;
   padding: 0;
   font-family: roboto;
+  color: #000;
 }
 body {
   background:#CFD8DC;
 }
 .primaryColorBackground {
-  background: #607D8B;
+  background: #fff;
 }
 .darkPrimaryColorBackground {
-  background: #455A64;
+  background: #fff;
 }
 .textColor {
-  color: #fff;
+  color: #000;
 }
 
 .boldFont {
@@ -39,7 +40,7 @@ body {
 
 .menu .item a {
   text-decoration: none;
-  color: #fff;
+  color: #000;
   margin-left: 10px;
 }
 
