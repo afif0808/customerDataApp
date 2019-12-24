@@ -12,7 +12,6 @@
 }
 .searchBox {
   box-shadow: 2px 2px 8px  #ccc;
-
   width: 500px;
   background: #fff;
   float: left;
@@ -58,8 +57,10 @@
 
 }
 .btn-medium-v1 {
-  color:#000;
-  font-size: 25px;
+  color:#fff;
+  padding: 8px;
+  font-size: 20px;
   border:none;
-  background: none;
+  background: #000;
+  border-radius: 5px;
 }
