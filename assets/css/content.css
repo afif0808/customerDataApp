@@ -57,10 +57,11 @@
 
 }
 .btn-medium-v1 {
-  color:#fff;
+  color:#000;
   padding: 8px;
   font-size: 20px;
   border:none;
-  background: #000;
+  background: none;
   border-radius: 5px;
+  font-weight: bolder;
 }

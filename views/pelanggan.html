@@ -3,26 +3,30 @@
 
   <div class="content" ng-app="App" ng-controller="Controller">
     <div class="box primaryColorBackground">
-      <h1 style="float:left;" class="textColor">
+      <h1 style="float:left;  font-family: Roboto;"  class="textColor">
         <span class="glyphicon glyphicon-user"></span>
         Pelanggan
       </h1>
     </div>
 
     <input class="searchBox" type="text" placeholder="Cari..." name="" value="">
-    <span style="font-size:20px;color:#000;float:left;margin-left:-50px;margin-top:15px;" class="glyphicon glyphicon-search">
+    <span style="font-size:20px;color:#000;float:left;margin-left:-50px;margin-top:15px;font-weight:bolder;" class="glyphicon glyphicon-search">
     </span>
     <div class="tbl-wrapper">
       <table class="tbl-vertical-v1 darkPrimaryColorBackground">
         <tr>
           <td>Nama Pelanggan</td>
-          <td></td>
+          <td>
+            <button type="button" class="glyphicon glyphicon-plus-sign btn-medium-v1"  name="button"></button>
+          </td>
         </tr>
 
         <tr ng-repeat="c in customers">
           <td>((c.customer_name))</td>
           <td>
             <button type="button" class="glyphicon glyphicon-edit btn-medium-v1"  name="button"></button>
+            <button type="button" class="glyphicon glyphicon-eye-open btn-medium-v1"  name="button"></button>
+
           </td>
         </tr>
 

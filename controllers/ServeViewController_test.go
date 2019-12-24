@@ -15,8 +15,8 @@ func TestServeViewController(t *testing.T) {
 	testRecorder := httptest.NewRecorder()
 	testRouter := mux.NewRouter()
 
-	testRouter.Handle("/testWithoutTemplate", ServeViewController("../views/home.html", ""))
-	testRouter.Handle("/testWithTemplate", ServeViewController("../views/home.html", "../views/template.html"))
+	testRouter.Handle("/testWithoutTemplate", ServeViewController("../views/pelanggan.html", ""))
+	testRouter.Handle("/testWithTemplate", ServeViewController("../views/pelanggan.html", "../views/template.html"))
 
 	//serve view without template
 	testRequestWithoutTemplate := httptest.NewRequest("GET", "http://localhost:123/testWithoutTemplate", nil)

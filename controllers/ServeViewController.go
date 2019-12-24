@@ -34,7 +34,7 @@ func ServeViewController(file, templateFile string) http.Handler {
 			}
 		}
 
-		w.Header().Set("Content-Type", "text/html")
+		// w.Header().Set("Content-Type", "text/html")
 		// serve view
 		view.Execute(w, nil)
 	})
