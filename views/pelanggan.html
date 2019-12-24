@@ -16,16 +16,14 @@
       <table class="tbl-vertical-v1 darkPrimaryColorBackground">
         <tr>
           <td>Nama Pelanggan</td>
+          <td></td>
         </tr>
 
-        <tr>
-          <td>Afif</td>
-        </tr>
-        <tr>
-          <td>Aqil</td>
-        </tr>
-        <tr>
-          <td>Shodiq</td>
+        <tr ng-repeat="c in customers">
+          <td>((c.customer_name))</td>
+          <td>
+            <button type="button" class="glyphicon glyphicon-edit btn-medium-v1"  name="button"></button>
+          </td>
         </tr>
 
       </table>
@@ -39,6 +37,16 @@
 
     app.controller("Controller",function($scope){
       $scope.name = "afif"
+      $scope.customers = []
+      $scope.customers.push({"customer_name" : "Afif"})
+      $scope.customers.push({"customer_name" : "Shodiq"})
+      $scope.customers.push({"customer_name" : "Miftah"})
+      $scope.customers.push({"customer_name" : "Mila"})
+      $scope.customers.push({"customer_name" : "Syauqi"})
+      $scope.customers.push({"customer_name" : "Aila"})
+      $scope.customers.push({"customer_name" : "Eva"})
+
+
     })
 
     app.config(function($interpolateProvider) {
