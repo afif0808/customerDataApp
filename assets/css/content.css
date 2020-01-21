@@ -16,7 +16,7 @@
   background: #fff;
   float: left;
   padding: 12px 12px 12px 20px;
-  color: #000;
+  color: #455A64;
   font-weight: bold;
   border: none;
   outline: none;
@@ -26,14 +26,14 @@
 }
 
 ::placeholder {
-  color: #000;
+  color: #455A64;
 }
 
 .tbl-vertical-v1 td {
   padding: 10px 20px 10px 20px ;
   margin: 5px;
   border-bottom: solid 1px #ccc;
-
+  color: #455A64;
 }
 
 .tbl-vertical-v1 tr:first-child td {
@@ -57,11 +57,20 @@
 
 }
 .btn-medium-v1 {
-  color:#000;
+  color:#03A9F4;
   padding: 8px;
   font-size: 20px;
   border:none;
   background: none;
   border-radius: 5px;
+  font-weight: bolder;
+}
+.btn-medium-v2 {
+  color:#fff;
+  padding: 4px;
+  font-size: 13px;
+  border:none;
+  background: #03A9F4;
+  border-radius: 2px;
   font-weight: bolder;
 }

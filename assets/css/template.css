@@ -3,11 +3,11 @@
   height: 2000px;
   position: fixed;
   box-shadow: 2px 2px 8px #ccc;
+  background: #455A64;
 }
 * {
   margin: 0;
   padding: 0;
-  color: #000;
 }
 body {
   font-family: 'Roboto', sans-serif;
@@ -19,7 +19,7 @@ body {
   background: #fff;
 }
 .textColor {
-  color: #000;
+  color: #455A64;
 }
 
 .boldFont {
@@ -35,13 +35,14 @@ body {
 .menu .item{
   margin: 20px;
   list-style-type: none;
-  border-bottom: solid 1px #ccc;
   padding: 10px;
+  color: #fff;
+
 }
 
 .menu .item a {
   text-decoration: none;
-  color: #000;
+  color: #fff;
   margin-left: 10px;
   font-family: Roboto
 }
