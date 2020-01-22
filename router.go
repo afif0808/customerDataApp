@@ -12,6 +12,9 @@ func InitRouter() *mux.Router {
 		"../src/customerManagementApp/views/pelanggan.html",
 		"../src/customerManagementApp/views/template.html"))
 
+	router.Handle("/printAlamat", controllers.ServeViewController(
+		"../src/customerManagementApp/views/printAlamat.html", ""))
+
 	// assets serve static files such as css,javascript,image dll.
 	router.PathPrefix("/assets/").Handler(controllers.ServeFolderController(
 		"/assets/", "../src/customerManagementApp/assets/"))
