@@ -1,7 +1,7 @@
-<html lang="en" dir="ltr">
-  <head>
+<html ng-app="PrintAddressApp" ng-controller="PrintAddressController" lang="en" dir="ltr">
+  <head >
     <meta charset="utf-8">
-    <title></title>
+    <title>Print Alamat</title>
     <link rel="stylesheet" type="text/css" href="/assets/bootstrap3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/fonts/roboto.css">
     <script src="assets/angular/angular.js" charset="utf-8"></script>
@@ -16,7 +16,7 @@
       </tr>
       <tr>
         <td>
-          <h1>Muhammad Afif</h1>
+          <h1>((name))</h1>
           0823-8433-7698
         </td>
       </tr>
@@ -26,12 +26,9 @@
       </tr>
       <tr>
         <td>
-          <h1>Riana</h1>
-          Jl. Cemani ,  Banaran <br>
-          Kec. Grogol , Kab. Sukoharjo <br>
-          Prov. Jawa Tengah <br>
-          Kode Pos : 57552 <br>
-          0857-9957-1202 <br>
+          <h1>((customer.name))</h1>
+          <p ng-bind-html="customer.information">
+          </p>
         </td>
       </tr>
 
@@ -47,6 +44,20 @@
     </table>
   </body>
 </html>
+<script type="text/javascript">
+  const app = angular.module("PrintAddressApp",[])
+
+  app.controller("PrintAddressController",function($scope,$http,$sce){
+    $scope.customer = JSON.parse(localStorage.getItem("customerStorage"))
+    $scope.customer.information = $sce.trustAsHtml($scope.customer.information)
+  })
+
+  app.config(function($interpolateProvider) {
+    $interpolateProvider.startSymbol('((');
+    $interpolateProvider.endSymbol('))');
+  });
+</script>
+
 <style >
   .tbl-alamat {
     width: 100%;

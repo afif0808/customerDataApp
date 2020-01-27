@@ -29,6 +29,23 @@
   color: #455A64;
 }
 
+.tbl-wrapper {
+  float: left;
+  width: 100%;
+}
+
+.tbl-vertical-v1 {
+  margin-top: 30px;
+  font-size: 18px;
+  font-family: roboto;
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 1px #ccc;
+  box-shadow: 2px 2px 8px 2px #ccc;
+  float: left;
+  width: 50%;
+}
+
 .tbl-vertical-v1 td {
   padding: 10px 20px 10px 20px ;
   margin: 5px;
@@ -38,24 +55,34 @@
 
 .tbl-vertical-v1 tr:first-child td {
   font-weight: bolder;
-  border-bottom: solid 1px #ccc;
-}
-.tbl-wrapper {
-  float: left;
-  width: 100%;
 }
 
-.tbl-vertical-v1 {
+.tbl-horizontal-v1 {
+  margin-left: 80px;
   margin-top: 30px;
   font-size: 18px;
-  color: #fff;
   font-family: roboto;
   padding: 10px;
   border-radius: 5px;
   border: solid 1px #ccc;
   box-shadow: 2px 2px 8px 2px #ccc;
-
+  float: left;
+  width: 40%;
 }
+
+.tbl-horizontal-v1 td.caption {
+  font-weight: bolder;
+  border-bottom: solid 1px #ccc;
+}
+
+.tbl-horizontal-v1 td {
+  padding: 10px 20px 10px 20px ;
+  margin: 5px;
+  border-bottom: solid 1px #ccc;
+  color: #455A64;
+}
+
+
 .btn-medium-v1 {
   color:#03A9F4;
   padding: 8px;

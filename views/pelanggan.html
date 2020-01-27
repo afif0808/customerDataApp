@@ -1,6 +1,5 @@
 {{define "title"}}<title>Pelanggan</title>{{end}}
 {{define "content"}}
-
   <div class="content" ng-app="App" ng-controller="Controller">
     <div class="box">
       <h1 style="float:left;  font-family: Roboto;"  class="textColor">
@@ -18,7 +17,7 @@
         <tr>
           <td>Nama Pelanggan</td>
           <td>
-            <button type="button" class="glyphicon glyphicon-plus-sign btn-medium-v1"  name="button"></button>
+            <button ng-click="goToCreateCustomer()" type="button" class="glyphicon glyphicon-plus-sign btn-medium-v1"  name="button"></button>
           </td>
 
         </tr>
@@ -27,29 +26,35 @@
           <td>((c.name))</td>
           <td>
             <button type="button" class="glyphicon glyphicon-edit btn-medium-v1"  name="button"></button>
-            <button type="button" class="glyphicon glyphicon-eye-open btn-medium-v1"  name="button"></button>
+            <button ng-click="viewCustomer(c)" type="button" class="glyphicon glyphicon-eye-open btn-medium-v1"  name="button"></button>
             <button type="button" class="glyphicon glyphicon-trash btn-medium-v1"  name="button"></button>
             <span class="btn-medium-v1 glyphicon glyphicon-print" type="button" name="button"></span>
-            <button class="btn-medium-v2" type="button" name="button">ALAMAT</button>
+            <button class="btn-medium-v2" type="button" ng-click="goToPrintAlamat(c)" name="button">ALAMAT</button>
             <button class="btn-medium-v2" type="button" name="button">SURAT JALAN</button>
           </td>
         </tr>
-
       </table>
+      <div ng-view>
+
+      </div>
     </div>
 
 
   </div>
 
   <script type="text/javascript">
-    const app = angular.module("App",[])
-
-    app.controller("Controller",function($scope,$http){
+    const app = angular.module("App",['ngRoute'])
+    window.onload = function() {
+      window.location.href = "http://localhost:345/pelanggan#!/"
+    }
+    app.controller("Controller",function($scope,$http,$sce){
+      $scope.viewedCustomer = {}
       $scope.customers = []
       $scope.getCustomers = function(){
         if ($scope.customerSearchQuery == "" || $scope.customerSearchQuery == undefined) {
           $http.get("http://localhost:444/api/customers").then(function(res){
             $scope.customers = res.data.result
+
           })
         }
         else {
@@ -59,9 +64,40 @@
         }
 
       }
+      $scope.viewCustomer = function(customer) {
+        $scope.viewedCustomer = JSON.parse(JSON.stringify(customer))
+        $scope.viewedCustomer.information = $sce.trustAsHtml($scope.viewedCustomer.information)
+        window.location.href = "http://localhost:345/pelanggan#!/lihatPelanggan"
+      }
+      $scope.goToCreateCustomer = function() {
+        window.location.href = "http://localhost:345/pelanggan#!/tambahPelanggan"
+      }
+
+
       $scope.getCustomers()
 
+      $scope.goToPrintAlamat = function(customer) {
+        localStorage.setItem("customerStorage",JSON.stringify(customer))
+        window.open("/printAlamat")
+      }
     })
+
+
+    app.config(function($routeProvider) {
+      $routeProvider
+      .when("/", {
+        templateUrl : "spaViews/tambahPelanggan.html"
+      })
+      .when("/lihatPelanggan", {
+        templateUrl : "spaViews/lihatPelanggan.html"
+      })
+      .when("/tambahPelanggan", {
+        templateUrl : "spaViews/tambahPelanggan.html"
+      })
+      .when("/ubahPelanggan", {
+        templateUrl : "spaViews/ubahPelanggan.html"
+      });
+    });
 
     app.config(function($interpolateProvider) {
       $interpolateProvider.startSymbol('((');

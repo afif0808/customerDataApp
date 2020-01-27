@@ -18,5 +18,9 @@ func InitRouter() *mux.Router {
 	// assets serve static files such as css,javascript,image dll.
 	router.PathPrefix("/assets/").Handler(controllers.ServeFolderController(
 		"/assets/", "../src/customerManagementApp/assets/"))
+
+	router.PathPrefix("/spaViews/").Handler(controllers.ServeFolderController(
+		"/spaViews/", "../src/customerManagementApp/spaViews/"))
+
 	return router
 }
