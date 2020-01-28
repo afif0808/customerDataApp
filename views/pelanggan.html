@@ -1,5 +1,6 @@
 {{define "title"}}<title>Pelanggan</title>{{end}}
 {{define "content"}}
+
   <div class="content" ng-app="App" ng-controller="Controller">
     <div class="box">
       <h1 style="float:left;  font-family: Roboto;"  class="textColor">
@@ -34,7 +35,7 @@
           </td>
         </tr>
       </table>
-      <div ng-view>
+      <div a ng-view>
 
       </div>
     </div>
@@ -48,6 +49,20 @@
       window.location.href = "http://localhost:345/pelanggan#!/"
     }
     app.controller("Controller",function($scope,$http,$sce){
+      $scope.addCustomer = function(){
+        $http({
+          method: "POST",
+          url : "http://localhost:444/api/customers",
+          data : {
+            customerName : $scope.customerName,
+            customerInformation : $scope.customerInformation
+          }
+        }).then(function(){
+          alert("Successfuly Added New Customer")
+        })
+      }
+
+      $scope.addCustomer()
       $scope.viewedCustomer = {}
       $scope.customers = []
       $scope.getCustomers = function(){
@@ -86,7 +101,8 @@
     app.config(function($routeProvider) {
       $routeProvider
       .when("/", {
-        templateUrl : "spaViews/tambahPelanggan.html"
+        templateUrl : "spaViews/tambahPelanggan.html",
+        controller : "TambahPelangganController"
       })
       .when("/lihatPelanggan", {
         templateUrl : "spaViews/lihatPelanggan.html"
@@ -99,10 +115,29 @@
       });
     });
 
+    app.controller("TambahPelangganController",function($scope,$http){
+      $scope.addCustomer = function(){
+        $http({
+          method : "POST",
+          url : "http://localhost:444/api/customers",
+          data : {
+            customerName : $scope.customerName,
+            customerInformation : $scope.customerInformation,
+          },
+          header : {
+            'Content-Type' : "application/x-www-form-urlencoded"
+          },
+        }).then(function(){
+          alert("Successfuly Added New Customer")
+        })
+      }
+    })
+
     app.config(function($interpolateProvider) {
       $interpolateProvider.startSymbol('((');
       $interpolateProvider.endSymbol('))');
     });
+
   </script>
 
 

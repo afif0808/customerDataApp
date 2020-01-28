@@ -1,25 +1,27 @@
-<table class="tbl-horizontal-v1">
-  <tr>
-    <td class="caption">Nama Pelanggan</td>
-  </tr>
+<form ng-submit="addCustomer()">
+  <table class="tbl-horizontal-v1" >
+    <tr>
+      <td class="caption">Nama Pelanggan</td>
+    </tr>
 
-  <tr>
-    <td>
-      <input type="text" class="form-control" name="" value="">
-    </td>
-  </tr>
+    <tr>
+      <td>
+        <input type="text" required="true" class="form-control" ng-model="customerName" value="">
+      </td>
+    </tr>
 
-  <tr>
-    <td class="caption">Informasi Pelanggan</td>
-  </tr>
-  <tr>
-    <td>
-      <textarea name="name" rows="8" class="form-control"></textarea>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <button class="btn-medium-v2" type="button" name="button">TAMBAH PELANGGAN</button>
-    </td>
-  </tr>
-</table>
+    <tr>
+      <td class="caption">Informasi Pelanggan</td>
+    </tr>
+    <tr>
+      <td>
+        <textarea name="name" rows="8" class="form-control" ng-model="customerInformation"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button class="btn-medium-v2" type="submit" name="button">TAMBAH PELANGGAN</button>
+      </td>
+    </tr>
+  </table>
+</form>
