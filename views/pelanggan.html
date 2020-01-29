@@ -51,15 +51,20 @@
     app.controller("Controller",function($scope,$http,$sce){
       $scope.addCustomer = function(){
         $http({
-          method: "POST",
-          url : "http://localhost:444/api/customers",
-          data : {
-            customerName : $scope.customerName,
-            customerInformation : $scope.customerInformation
-          }
-        }).then(function(){
-          alert("Successfuly Added New Customer")
-        })
+    method : "POST",
+    url : "http://localhost:444/api/customers",
+    data : {
+      cells : $scope.invalidData
+    },
+    headers : {
+      "Content-Type" : "application/x-www-form-urlencoded"
+    }
+  }).then(function(){
+    $scope.invalidData = null
+    $scope.invalidDataLen = 0
+    $scope.state = "correctionApplied"
+  })
+
       }
 
       $scope.addCustomer()
