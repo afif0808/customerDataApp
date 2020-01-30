@@ -2,40 +2,47 @@
 {{define "content"}}
 
   <div class="content" ng-app="App" ng-controller="Controller">
-    <div class="box">
-      <h1 style="float:left;  font-family: Roboto;"  class="textColor">
-        <span class="glyphicon glyphicon-user"></span>
-        Pelanggan
-      </h1>
-    </div>
-    <form ng-submit="getCustomers()" class="" method="post">
-      <input class="searchBox" ng-model="customerSearchQuery" type="text" placeholder="Cari..." name="" value="">
-    </form>
-    <span style="font-size:20px;color:#03A9F4;float:left;margin-left:-50px;margin-top:15px;font-weight:bolder;" class="glyphicon glyphicon-search">
-    </span>
-    <div class="tbl-wrapper">
-      <table class="tbl-vertical-v1 darkPrimaryColorBackground">
+    <div class="container">
+      <div class="box">
+        <h1 style="float:left;  font-family: Roboto;"  class="textColor">
+          <span class="glyphicon glyphicon-user"></span>
+          Pelanggan
+        </h1>
+      </div>
+      <form ng-submit="getCustomers()" class="" method="post">
+        <input class="searchBox" ng-model="customerSearchQuery" type="text" placeholder="Cari..." name="" value="">
+      </form>
+      <span style="font-size:20px;color:#03A9F4;float:left;margin-left:-50px;margin-top:15px;font-weight:bolder;" class="glyphicon glyphicon-search">
+      </span>
+      <table style="width:100%" class="tbl-vertical-v1 darkPrimaryColorBackground">
         <tr>
-          <td>Nama Pelanggan</td>
-          <td>
+          <td width="60%">Nama Pelanggan</td>
+          <td width="40%" style="text-align:right;">
             <button ng-click="goToCreateCustomer()" type="button" class="glyphicon glyphicon-plus-sign btn-medium-v1"  name="button"></button>
           </td>
-
         </tr>
-
         <tr ng-repeat="c in customers">
           <td>((c.name))</td>
-          <td>
-            <button type="button" class="glyphicon glyphicon-edit btn-medium-v1"  name="button"></button>
+          <td style="text-align:right;">
+            <button type="button" class="glyphicon glyphicon-edit btn-medium-v1" ng-click="goToUpdateCustomer(c)"  name="button"></button>
             <button ng-click="viewCustomer(c)" type="button" class="glyphicon glyphicon-eye-open btn-medium-v1"  name="button"></button>
-            <button type="button" class="glyphicon glyphicon-trash btn-medium-v1"  name="button"></button>
-            <span class="btn-medium-v1 glyphicon glyphicon-print" type="button" name="button"></span>
-            <button class="btn-medium-v2" type="button" ng-click="goToPrintAlamat(c)" name="button">ALAMAT</button>
-            <button class="btn-medium-v2" type="button" name="button">SURAT JALAN</button>
           </td>
         </tr>
+        <tr ng-if="previousCustomersLink != '' || nextCustomersLink != ''">
+          <td>
+            <button ng-if="previousCustomersLink != ''"  ng-click="getPreviousCustomers()" type="button" class="glyphicon glyphicon-arrow-left btn-medium-v1" name="button"></button>
+          </td>
+          <td style="text-align:right;">
+            <button ng-if="nextCustomersLink != '' " ng-click="getNextCustomers()" type="button" class="glyphicon glyphicon-arrow-right btn-medium-v1" name="button"></button>
+          </td>
+        </tr>
+
       </table>
-      <div a ng-view>
+    </div>
+
+    <div class="container">
+
+      <div class="" ng-view style="margin-left:80px;width:90%;">
 
       </div>
     </div>
@@ -49,50 +56,66 @@
       window.location.href = "http://localhost:345/pelanggan#!/"
     }
     app.controller("Controller",function($scope,$http,$sce){
-      $scope.addCustomer = function(){
-        $http({
-    method : "POST",
-    url : "http://localhost:444/api/customers",
-    data : {
-      cells : $scope.invalidData
-    },
-    headers : {
-      "Content-Type" : "application/x-www-form-urlencoded"
-    }
-  }).then(function(){
-    $scope.invalidData = null
-    $scope.invalidDataLen = 0
-    $scope.state = "correctionApplied"
-  })
 
+
+      $scope.viewedCustomer = {} // customer to be viewed
+      $scope.customerSelectedToUpdate = {} // customer to be updated
+      $scope.customers = []
+      $scope.customerShowLimit = 4
+      $scope.nextCustomersLink = ''
+      $scope.previousCustomersLink = ''
+
+      $scope.getNextCustomers = function() {
+        $http.get("http://localhost:444"+$scope.nextCustomersLink).then(function(res){
+          $scope.customers = res.data.result
+          $scope.nextCustomersLink = res.data.next
+          $scope.previousCustomersLink = res.data.previous
+          console.log($scope.nextCustomersLink)
+        })
       }
 
-      $scope.addCustomer()
-      $scope.viewedCustomer = {}
-      $scope.customers = []
+      $scope.getPreviousCustomers = function() {
+        $http.get("http://localhost:444"+$scope.previousCustomersLink).then(function(res){
+          $scope.customers = res.data.result
+          $scope.nextCustomersLink = res.data.next
+          $scope.previousCustomersLink = res.data.previous
+        })
+      }
+
       $scope.getCustomers = function(){
         if ($scope.customerSearchQuery == "" || $scope.customerSearchQuery == undefined) {
-          $http.get("http://localhost:444/api/customers").then(function(res){
+          $http.get("http://localhost:444/api/customers?limit="+$scope.customerShowLimit).then(function(res){
             $scope.customers = res.data.result
-
+            $scope.nextCustomersLink = res.data.next
+            $scope.previousCustomersLink = res.data.previous
           })
         }
         else {
-          $http.get("http://localhost:444/api/customers?s="+$scope.customerSearchQuery).then(function(res){
+          $http.get("http://localhost:444/api/customers?limit="+$scope.customerShowLimit+"&s="+$scope.customerSearchQuery).then(function(res){
             $scope.customers = res.data.result
+            $scope.nextCustomersLink = res.data.next
+            $scope.previousCustomersLink = res.data.previous
           })
+          window.location.href = "http://localhost:345/pelanggan#!/"
         }
-
       }
       $scope.viewCustomer = function(customer) {
         $scope.viewedCustomer = JSON.parse(JSON.stringify(customer))
-        $scope.viewedCustomer.information = $sce.trustAsHtml($scope.viewedCustomer.information)
         window.location.href = "http://localhost:345/pelanggan#!/lihatPelanggan"
       }
       $scope.goToCreateCustomer = function() {
         window.location.href = "http://localhost:345/pelanggan#!/tambahPelanggan"
       }
 
+      $scope.goToUpdateCustomer = function(customer) {
+        // copy customer without refference
+        $scope.customerSelectedToUpdate = JSON.parse(JSON.stringify(customer))
+
+        // refference so customer in customer array can be easily updated.
+        $scope.selectedCustomerRefference = customer
+
+        window.location.href = "http://localhost:345/pelanggan#!/ubahPelanggan"
+      }
 
       $scope.getCustomers()
 
@@ -110,15 +133,23 @@
         controller : "TambahPelangganController"
       })
       .when("/lihatPelanggan", {
-        templateUrl : "spaViews/lihatPelanggan.html"
+        templateUrl : "spaViews/lihatPelanggan.html",
+        controller : "LihatPelangganController",
       })
       .when("/tambahPelanggan", {
-        templateUrl : "spaViews/tambahPelanggan.html"
+        templateUrl : "spaViews/tambahPelanggan.html",
+        controller : "TambahPelangganController"
       })
       .when("/ubahPelanggan", {
-        templateUrl : "spaViews/ubahPelanggan.html"
+        templateUrl : "spaViews/ubahPelanggan.html",
+        controller : "UbahPelangganController"
       });
     });
+
+    app.controller("LihatPelangganController",function($scope,$http){
+
+    })
+
 
     app.controller("TambahPelangganController",function($scope,$http){
       $scope.addCustomer = function(){
@@ -129,14 +160,39 @@
             customerName : $scope.customerName,
             customerInformation : $scope.customerInformation,
           },
-          header : {
-            'Content-Type' : "application/x-www-form-urlencoded"
-          },
+          headers : {
+            "Content-Type" : "application/x-www-form-urlencoded"
+          }
         }).then(function(){
-          alert("Successfuly Added New Customer")
+          $scope.viewedCustomer.name = $scope.customerName
+          $scope.viewedCustomer.information = $scope.customerInformation
+          window.location.href="/pelanggan#!/lihatPelanggan"
         })
       }
     })
+
+    app.controller("UbahPelangganController",function($scope,$http){
+      $scope.updateCustomer = function() {
+        $http({
+          method : "POST",
+          url : "http://localhost:444/api/customers/" + $scope.customerSelectedToUpdate.id,
+          data : {
+            newCustomerName : $scope.customerSelectedToUpdate.name,
+            newCustomerInformation : $scope.customerSelectedToUpdate.information,
+          },
+          headers : {
+            "Content-Type" : "application/x-www-form-urlencoded"
+          }
+        }).then(function(){
+          $scope.selectedCustomerRefference.name = $scope.customerSelectedToUpdate.name
+          $scope.selectedCustomerRefference.information = $scope.customerSelectedToUpdate.information
+          $scope.viewedCustomer.name = $scope.selectedCustomerRefference.name
+          $scope.viewedCustomer.information = $scope.selectedCustomerRefference.information
+          window.location.href="/pelanggan#!/lihatPelanggan"
+        })
+      }
+    })
+
 
     app.config(function($interpolateProvider) {
       $interpolateProvider.startSymbol('((');

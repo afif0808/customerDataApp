@@ -1,3 +1,6 @@
+<h1 style="color:#455A64;margin-top:90px;">
+  Lihat Pelanggan
+</h1>
 <table class="tbl-horizontal-v1">
   <tr>
     <td class="caption">Nama Pelanggan</td>
@@ -14,8 +17,15 @@
   </tr>
   <tr>
     <td>
-      <p ng-bind-html="viewedCustomer.information">
+      <p style="white-space: pre-wrap;" ng-bind="viewedCustomer.information">
       </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <button type="button" class="btn-medium-v2"  name="button">HAPUS</button>
+      <button class="btn-medium-v2" type="button" ng-click="goToPrintAlamat(viewedCustomer)" name="button">KERTAS ALAMAT</button>
+      <button class="btn-medium-v2" type="button" name="button">SURAT JALAN</button>
     </td>
   </tr>
 </table>

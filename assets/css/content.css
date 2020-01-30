@@ -29,9 +29,10 @@
   color: #455A64;
 }
 
-.tbl-wrapper {
+.container {
   float: left;
-  width: 100%;
+  width: 50%;
+  /* background: #f00; */
   margin-bottom: 100px;
 }
 .tbl-vertical-v1 {
@@ -39,11 +40,11 @@
   font-size: 18px;
   font-family: roboto;
   padding: 10px;
+  background: #fff;
   border-radius: 5px;
   border: solid 1px #ccc;
   box-shadow: 2px 2px 8px 2px #ccc;
   float: left;
-  width: 50%;
 }
 
 .tbl-vertical-v1 td {
@@ -58,7 +59,6 @@
 }
 
 .tbl-horizontal-v1 {
-  margin-left: 80px;
   margin-top: 30px;
   font-size: 18px;
   font-family: roboto;
@@ -67,7 +67,7 @@
   border: solid 1px #ccc;
   box-shadow: 2px 2px 8px 2px #ccc;
   float: left;
-  width: 40%;
+  width: 100%;
 }
 
 .tbl-horizontal-v1 td.caption {

@@ -16,7 +16,7 @@
       </tr>
       <tr>
         <td>
-          <h1>((name))</h1>
+          <h1>Muhammad Afif</h1>
           0823-8433-7698
         </td>
       </tr>
@@ -27,7 +27,7 @@
       <tr>
         <td>
           <h1>((customer.name))</h1>
-          <p ng-bind-html="customer.information">
+          <p style="white-space: pre-wrap;" ng-bind="customer.information">
           </p>
         </td>
       </tr>
@@ -49,7 +49,6 @@
 
   app.controller("PrintAddressController",function($scope,$http,$sce){
     $scope.customer = JSON.parse(localStorage.getItem("customerStorage"))
-    $scope.customer.information = $sce.trustAsHtml($scope.customer.information)
   })
 
   app.config(function($interpolateProvider) {
