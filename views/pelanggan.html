@@ -147,6 +147,39 @@
     });
 
     app.controller("LihatPelangganController",function($scope,$http){
+      $scope.showCustomerDeleteConfirmation = function() {
+        var blackScreen = document.createElement('div')
+        var modal = document.createElement('div')
+        modal.innerHTML = `
+          <table>
+            <tr>
+              <td><h3>Apakah anda benar-benar akan menghapus pelanggan ini?</h3></td>
+            </tr>
+            <tr>
+              <td>
+                <button type='button' class='btn-medium-v2'  name="button">Ya</button>
+                <button type='button' class='btn-medium-v2'  name="button">Tidak</button>
+              </td>
+            </tr>
+          </table>
+        `
+
+
+        blackScreen.setAttribute('class','blackScreen')
+
+        modal.setAttribute('class','modal-v1')
+
+        blackScreen.onclick = function() {
+          document.body.removeChild(blackScreen)
+          document.body.removeChild(modal)
+        }
+
+        document.body.appendChild(blackScreen)
+        document.body.appendChild(modal)
+
+
+      }
+
 
     })
 
@@ -191,6 +224,8 @@
           window.location.href="/pelanggan#!/lihatPelanggan"
         })
       }
+
+
     })
 
 
