@@ -14,20 +14,21 @@
       </form>
       <span style="font-size:20px;color:#03A9F4;float:left;margin-left:-50px;margin-top:15px;font-weight:bolder;" class="glyphicon glyphicon-search">
       </span>
-      <table style="width:100%" class="tbl-vertical-v1 darkPrimaryColorBackground">
-        <tr>
+      <table id="customer_list_tbl" style="width:100%" class="tbl-vertical-v1 darkPrimaryColorBackground customerList">
+        <tr style="font-weight:bolder;">
           <td width="60%">Nama Pelanggan</td>
           <td width="40%" style="text-align:right;">
             <button ng-click="goToCreateCustomer()" type="button" class="glyphicon glyphicon-plus-sign btn-medium-v1"  name="button"></button>
           </td>
         </tr>
-        <tr ng-repeat="c in customers">
-          <td>((c.name))</td>
-          <td style="text-align:right;">
-            <button type="button" class="glyphicon glyphicon-edit btn-medium-v1" ng-click="goToUpdateCustomer(c)"  name="button"></button>
-            <button ng-click="viewCustomer(c)" type="button" class="glyphicon glyphicon-eye-open btn-medium-v1"  name="button"></button>
-          </td>
-        </tr>
+          <tr id="customer_((c.id))" ng-repeat="c in customers">
+
+            <td>((c.name))</td>
+            <td style="text-align:right;">
+              <button type="button" class="glyphicon glyphicon-edit btn-medium-v1" ng-click="goToUpdateCustomer(c)"  name="button"></button>
+              <button ng-click="viewCustomer(c)" type="button" class="glyphicon glyphicon-eye-open btn-medium-v1"  name="button"></button>
+            </td>
+          </tr>
         <tr ng-if="previousCustomersLink != '' || nextCustomersLink != ''">
           <td>
             <button ng-if="previousCustomersLink != ''"  ng-click="getPreviousCustomers()" type="button" class="glyphicon glyphicon-arrow-left btn-medium-v1" name="button"></button>
@@ -61,49 +62,67 @@
       $scope.viewedCustomer = {} // customer to be viewed
       $scope.customerSelectedToUpdate = {} // customer to be updated
       $scope.customers = []
+      $scope.selectedItem = null
       $scope.customerShowLimit = 4
       $scope.nextCustomersLink = ''
       $scope.previousCustomersLink = ''
+      $scope.currentCustomersLink = "http://localhost:444/api/customers?limit="+$scope.customerShowLimit
 
       $scope.getNextCustomers = function() {
-        $http.get("http://localhost:444"+$scope.nextCustomersLink).then(function(res){
-          $scope.customers = res.data.result
-          $scope.nextCustomersLink = res.data.next
-          $scope.previousCustomersLink = res.data.previous
-          console.log($scope.nextCustomersLink)
-        })
+        window.location.href = "http://localhost:345/pelanggan#!/"
+        $scope.currentCustomersLink = "http://localhost:444"+$scope.nextCustomersLink
+        $scope.getCustomers();
       }
 
       $scope.getPreviousCustomers = function() {
-        $http.get("http://localhost:444"+$scope.previousCustomersLink).then(function(res){
-          $scope.customers = res.data.result
-          $scope.nextCustomersLink = res.data.next
-          $scope.previousCustomersLink = res.data.previous
-        })
+        window.location.href = "http://localhost:345/pelanggan#!/"
+        $scope.currentCustomersLink = "http://localhost:444"+$scope.previousCustomersLink
+        $scope.getCustomers();
       }
 
       $scope.getCustomers = function(){
         if ($scope.customerSearchQuery == "" || $scope.customerSearchQuery == undefined) {
-          $http.get("http://localhost:444/api/customers?limit="+$scope.customerShowLimit).then(function(res){
+          $http.get($scope.currentCustomersLink).then(function(res){
             $scope.customers = res.data.result
             $scope.nextCustomersLink = res.data.next
             $scope.previousCustomersLink = res.data.previous
+
           })
+
+
+
         }
         else {
           $http.get("http://localhost:444/api/customers?limit="+$scope.customerShowLimit+"&s="+$scope.customerSearchQuery).then(function(res){
             $scope.customers = res.data.result
             $scope.nextCustomersLink = res.data.next
             $scope.previousCustomersLink = res.data.previous
+
+
           })
+
+
           window.location.href = "http://localhost:345/pelanggan#!/"
         }
+
       }
       $scope.viewCustomer = function(customer) {
         $scope.viewedCustomer = JSON.parse(JSON.stringify(customer))
+        $scope.selectedItem = JSON.parse(JSON.stringify(customer))
+
+        if(document.getElementsByClassName('selectedItem').length > 0){
+            document.getElementsByClassName('selectedItem')[0].removeAttribute('class')
+        }
+        document.getElementById('customer_' + $scope.selectedItem.id).setAttribute('class','selectedItem')
+
         window.location.href = "http://localhost:345/pelanggan#!/lihatPelanggan"
       }
       $scope.goToCreateCustomer = function() {
+        if(document.getElementsByClassName('selectedItem').length > 0){
+            document.getElementsByClassName('selectedItem')[0].removeAttribute('class')
+        }
+
+
         window.location.href = "http://localhost:345/pelanggan#!/tambahPelanggan"
       }
 
@@ -111,8 +130,16 @@
         // copy customer without refference
         $scope.customerSelectedToUpdate = JSON.parse(JSON.stringify(customer))
 
-        // refference so customer in customer array can be easily updated.
+        $scope.selectedItem = JSON.parse(JSON.stringify(customer))
+
+
+        // refference is used to easily update the updated customer in customer's array
         $scope.selectedCustomerRefference = customer
+
+        if(document.getElementsByClassName('selectedItem').length > 0){
+            document.getElementsByClassName('selectedItem')[0].removeAttribute('class')
+        }
+        document.getElementById('customer_' + $scope.selectedItem.id).setAttribute('class','selectedItem')
 
         window.location.href = "http://localhost:345/pelanggan#!/ubahPelanggan"
       }
@@ -147,9 +174,25 @@
     });
 
     app.controller("LihatPelangganController",function($scope,$http){
-      $scope.showCustomerDeleteConfirmation = function() {
+      // deleteCustomer delete customer by id
+
+      $scope.showCustomerDeleteConfirmation = function(customer) {
         var blackScreen = document.createElement('div')
         var modal = document.createElement('div')
+
+        hideDeleteConfirmation = function() {
+          document.body.removeChild(blackScreen)
+          document.body.removeChild(modal)
+        }
+        deleteCustomer = function() {
+          $http({
+            method : "DELETE",
+            url : "http://localhost:444/api/customers/" + customer.id,
+          }).then(function(){
+            $scope.getCustomers()
+          })
+          hideDeleteConfirmation()
+        }
         modal.innerHTML = `
           <table>
             <tr>
@@ -157,27 +200,21 @@
             </tr>
             <tr>
               <td>
-                <button type='button' class='btn-medium-v2'  name="button">Ya</button>
-                <button type='button' class='btn-medium-v2'  name="button">Tidak</button>
+                <button type='button' onclick='deleteCustomer()'  class='btn-medium-v2'  name="button">Ya</button>
+                <button type='button' onclick='hideDeleteConfirmation()' class='btn-medium-v2'  name="button">Tidak</button>
               </td>
             </tr>
           </table>
         `
 
-
         blackScreen.setAttribute('class','blackScreen')
 
         modal.setAttribute('class','modal-v1')
 
-        blackScreen.onclick = function() {
-          document.body.removeChild(blackScreen)
-          document.body.removeChild(modal)
-        }
 
+        blackScreen.onclick = hideDeleteConfirmation
         document.body.appendChild(blackScreen)
         document.body.appendChild(modal)
-
-
       }
 
 

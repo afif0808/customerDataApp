@@ -54,9 +54,6 @@
   color: #455A64;
 }
 
-.tbl-vertical-v1 tr:first-child td {
-  font-weight: bolder;
-}
 
 .tbl-horizontal-v1 {
   margin-top: 30px;
@@ -119,4 +116,11 @@
   padding: 10px;
   border-radius: 5px;
 	margin: auto;
+}
+.customerList .selectedItem {
+  background: #e8ecff;
+}
+.customerList .selectedItem td {
+  color: #03A9F4;
+  font-weight: bold;
 }
