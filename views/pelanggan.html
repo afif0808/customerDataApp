@@ -58,12 +58,12 @@
     }
     app.controller("Controller",function($scope,$http,$sce){
 
-
+      $scope.customerSearchQuery = ""
       $scope.viewedCustomer = {} // customer to be viewed
       $scope.customerSelectedToUpdate = {} // customer to be updated
       $scope.customers = []
       $scope.selectedItem = null
-      $scope.customerShowLimit = 1
+      $scope.customerShowLimit = 4
       $scope.nextCustomersLink = ''
       $scope.previousCustomersLink = ''
       $scope.defaultCustomersLink = "http://localhost:444/api/customers?limit="+$scope.customerShowLimit
@@ -221,9 +221,9 @@
         }).then(function(){
           $scope.viewedCustomer.name = $scope.customerName
           $scope.viewedCustomer.information = $scope.customerInformation
+          $scope.$parent.customerSearchQuery = $scope.customerName
+          $scope.searchCustomers()
           window.location.href="/pelanggan#!/lihatPelanggan"
-          $scope.customerSearchQuery = $scope.customerName
-          $scope.getCustomers()
         })
       }
     })
