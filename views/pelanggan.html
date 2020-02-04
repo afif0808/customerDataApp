@@ -9,7 +9,7 @@
           Pelanggan
         </h1>
       </div>
-      <form ng-submit="getCustomers()" class="" method="post">
+      <form ng-submit="searchCustomers()" class="" method="post">
         <input class="searchBox" ng-model="customerSearchQuery" type="text" placeholder="Cari..." name="" value="">
       </form>
       <span style="font-size:20px;color:#03A9F4;float:left;margin-left:-50px;margin-top:15px;font-weight:bolder;" class="glyphicon glyphicon-search">
@@ -63,11 +63,11 @@
       $scope.customerSelectedToUpdate = {} // customer to be updated
       $scope.customers = []
       $scope.selectedItem = null
-      $scope.customerShowLimit = 4
+      $scope.customerShowLimit = 1
       $scope.nextCustomersLink = ''
       $scope.previousCustomersLink = ''
-      $scope.currentCustomersLink = "http://localhost:444/api/customers?limit="+$scope.customerShowLimit
-
+      $scope.defaultCustomersLink = "http://localhost:444/api/customers?limit="+$scope.customerShowLimit
+      $scope.currentCustomersLink = $scope.defaultCustomersLink
       $scope.getNextCustomers = function() {
         window.location.href = "http://localhost:345/pelanggan#!/"
         $scope.currentCustomersLink = "http://localhost:444"+$scope.nextCustomersLink
@@ -81,30 +81,16 @@
       }
 
       $scope.getCustomers = function(){
-        if ($scope.customerSearchQuery == "" || $scope.customerSearchQuery == undefined) {
           $http.get($scope.currentCustomersLink).then(function(res){
             $scope.customers = res.data.result
             $scope.nextCustomersLink = res.data.next
             $scope.previousCustomersLink = res.data.previous
-
           })
-
-
-
-        }
-        else {
-          $http.get("http://localhost:444/api/customers?limit="+$scope.customerShowLimit+"&s="+$scope.customerSearchQuery).then(function(res){
-            $scope.customers = res.data.result
-            $scope.nextCustomersLink = res.data.next
-            $scope.previousCustomersLink = res.data.previous
-
-
-          })
-
-
-          window.location.href = "http://localhost:345/pelanggan#!/"
-        }
-
+      }
+      $scope.searchCustomers = function() {
+        $scope.currentCustomersLink = $scope.defaultCustomersLink+"&s=" + $scope.customerSearchQuery
+        $scope.getCustomers()
+        window.location.href = "http://localhost:345/pelanggan#!/"
       }
       $scope.viewCustomer = function(customer) {
         $scope.viewedCustomer = JSON.parse(JSON.stringify(customer))
@@ -121,7 +107,6 @@
         if(document.getElementsByClassName('selectedItem').length > 0){
             document.getElementsByClassName('selectedItem')[0].removeAttribute('class')
         }
-
 
         window.location.href = "http://localhost:345/pelanggan#!/tambahPelanggan"
       }
@@ -237,6 +222,8 @@
           $scope.viewedCustomer.name = $scope.customerName
           $scope.viewedCustomer.information = $scope.customerInformation
           window.location.href="/pelanggan#!/lihatPelanggan"
+          $scope.customerSearchQuery = $scope.customerName
+          $scope.getCustomers()
         })
       }
     })
