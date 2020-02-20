@@ -70,13 +70,13 @@
       $scope.currentCustomersLink = $scope.defaultCustomersLink
       $scope.getNextCustomers = function() {
         window.location.href = "http://localhost:345/pelanggan#!/"
-        $scope.currentCustomersLink = "http://localhost:444"+$scope.nextCustomersLink
+        $scope.currentCustomersLink = $scope.nextCustomersLink
         $scope.getCustomers();
       }
 
       $scope.getPreviousCustomers = function() {
         window.location.href = "http://localhost:345/pelanggan#!/"
-        $scope.currentCustomersLink = "http://localhost:444"+$scope.previousCustomersLink
+        $scope.currentCustomersLink = $scope.previousCustomersLink
         $scope.getCustomers();
       }
 
