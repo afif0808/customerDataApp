@@ -85,6 +85,9 @@
             $scope.customers = res.data.result
             $scope.nextCustomersLink = res.data.next
             $scope.previousCustomersLink = res.data.previous
+            if($scope.customers == null) {
+              $scope.getPreviousCustomers();
+            }
           })
       }
       $scope.searchCustomers = function() {
